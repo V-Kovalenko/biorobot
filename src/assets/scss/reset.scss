@@ -64,7 +64,7 @@ a, a:hover, a:checked {
 img {
   max-width: 100%;
   display: block;
-  margin: 0 auto;
+  margin: 0;
 }
 
 input,
@@ -101,6 +101,7 @@ input[type=number] {
 }
 
 /*Removes content shifts when scrolling appears*/
+
 html {
   overflow-x: hidden;
   margin-right: calc(-1 * (100vw - 100%));

@@ -2,6 +2,8 @@
 @import "reset.scss";
 @import "_typography.scss";
 @import "colors.scss";
+@import "mixin";
+
 $maxWidth: 1920;
 @mixin adaptiv-font($pcSize, $mobSize) {
   $addSize: $pcSize - $mobSize;
@@ -48,12 +50,24 @@ body {
   }
 
   h2 {
-    @include adaptiv-font(32, 24)
+    @include adaptiv-font(32, 24);
+    color: $color-h2
   }
 
   h3 {
     @include adaptiv-font(24, 24)
   }
-  .
+.info-text {
+  @include adaptiv-font(20, 18);
+}
+  .text {
+    @include font-style(16px, 24px, 500)
+  }
+  .medium-text {
+    @include font-style(14px, 20px, 500)
+  }
+  .second-text {
+    @include font-style(12px, 16px, 400)
+  }
   /*styles for fonts end*/
 }

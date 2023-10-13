@@ -1,21 +1,13 @@
 module.exports = {
-  root: true,
   env: {
-    browser: true,
     node: true,
-    es2021: true,
   },
   extends: [
-    'airbnb-base',
-    'plugin:vue/essential',
+    'eslint:recommended',
+    'plugin:vue/vue3-recommended',
+    'prettier',
+    '@vue/eslint-config-airbnb',
   ],
-  plugins: ['vue'],
-  parser: 'vue-eslint-parser',
-  parserOptions: {
-    ecmaVersion: 'es2021',
-    parser: '@typescript-eslint/parser',
-    sourceType: 'module',
-  },
   rules: {
     /**
      * Vue
@@ -46,21 +38,6 @@ module.exports = {
       { registeredComponentsOnly: false },
     ],
     'vue/no-setup-props-destructure': 'off',
-    /**
-     * Typescript
-     */
-    '@typescript-eslint/no-this-alias': 'off',
-    '@typescript-eslint/no-shadow': 'error',
-    '@typescript-eslint/ban-ts-comment': [
-      'error',
-      {
-        'ts-expect-error': 'allow-with-description',
-        'ts-ignore': false,
-        'ts-nocheck': true,
-        'ts-check': false,
-        minimumDescriptionLength: 5,
-      },
-    ],
     // 'no-use-before-define': 'off',
     // '@typescript-eslint/no-use-before-define': ['error', { functions: false }],
     /**
@@ -125,18 +102,7 @@ module.exports = {
       },
     ],
     'prefer-destructuring': 'off',
+    'import/no-unresolved': 'off',
   },
-  ignorePatterns: [
-    'types/*.*',
-    'types/',
-  ],
-  settings: {
-    'import/resolver': {
-      typescript: true,
-      node: true,
-      nuxt: {
-        extensions: ['.js', '.ts', '.vue', '.json'],
-      },
-    },
-  },
+
 };

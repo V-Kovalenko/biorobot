@@ -1,6 +1,5 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import UiButton from "@/components/ui/UiButton.vue";
+import { RouterView } from "vue-router";
 </script>
 
 <template>
@@ -12,11 +11,9 @@ import UiButton from "@/components/ui/UiButton.vue";
 <style scoped lang="scss">
 @import "@/assets/scss/colors.scss";
 .app {
-
 }
 .container {
   max-width: 1016px;
   margin: 0 auto;
-
 }
 </style>
