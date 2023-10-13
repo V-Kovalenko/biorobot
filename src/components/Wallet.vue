@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref, toRefs } from "vue";
+import { computed, reactive, ref, toRefs } from "vue";
 import useCoins from "@/stores/useCoins";
 import UiLink from "@/components/ui/UiLink.vue";
 
@@ -19,7 +19,12 @@ const incrementsCoinsFive = () => {
   }
 };
 
-const imgCoins = [new URL("@/assets/images/wallet/coin.jpg", import.meta.url)];
+const imgCoins = computed(() =>
+  // добавление картинок - монеток
+  Array(coins.value).fill({
+    url: new URL("@/assets/images/wallet/coin.png", import.meta.url),
+  }),
+);
 </script>
 
 <template>
@@ -27,7 +32,8 @@ const imgCoins = [new URL("@/assets/images/wallet/coin.jpg", import.meta.url)];
     <div class="wallet__container" />
     <h2 class="wallet__h2">Кошелёк криптовалют</h2>
     <img
-      src="@/assets/images/wallet/coin.png"
+      v-for="img in imgCoins"
+      :src="img.url"
       alt="Coins"
       class="wallet__money-img"
     />
@@ -69,10 +75,14 @@ const imgCoins = [new URL("@/assets/images/wallet/coin.jpg", import.meta.url)];
     margin-bottom: 60px;
   }
   &__money-img {
-    margin-bottom: 24px;
+    //margin-bottom: 24px;
+    display: inline;
+    width: 16px;
+    height: 20px;
+    //margin: 0;
   }
   &__count-money {
-    margin-bottom: 44px;
+    margin: 24px 0 44px 0;
     display: flex;
     gap: 10px;
   }
