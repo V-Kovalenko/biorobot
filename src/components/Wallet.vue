@@ -1,4 +1,26 @@
-<script setup></script>
+<script setup>
+import { reactive, ref, toRefs } from "vue";
+import useCoins from "@/stores/useCoins";
+import UiLink from "@/components/ui/UiLink.vue";
+
+const coinsState = useCoins();
+const { coins, textCoins } = toRefs(coinsState); // данные монет и текст из store useCoins
+const isChecked = ref(false); // состояние checkbox
+const incrementCoins = () => {
+  if (coins.value < 100) {
+    // увеличить монеты на 1
+    coins.value++;
+  }
+};
+const incrementsCoinsFive = () => {
+  // прибавка по 5 монет
+  if (isChecked.value && coins.value <= 95) {
+    coins.value += 5;
+  }
+};
+
+const imgCoins = [new URL("@/assets/images/wallet/coin.jpg", import.meta.url)];
+</script>
 
 <template>
   <div class="wallet">
@@ -6,25 +28,29 @@
     <h2 class="wallet__h2">Кошелёк криптовалют</h2>
     <img
       src="@/assets/images/wallet/coin.png"
-      alt=""
+      alt="Coins"
       class="wallet__money-img"
     />
 
     <div class="wallet__count-money money">
-      <span class="wallet__number-money money">42</span>
-      <span class="wallet__text-money money">biorobo монет</span>
+      <span class="wallet__number-money money">{{ coins }}</span>
+      <span class="wallet__text-money money">{{ textCoins }}</span>
     </div>
 
     <div class="wallet__gypsy text">
-      <span class="wallet__gypsy-1">Нацыганить</span>
+      <UiLink v-if="coins < 100" @click="incrementCoins" />
+      <UiLink v-else :link-disabled="true" />
       <label for="gypsy" class="wallet__label">
-        <input type="checkbox" class="wallet__input" />
-        <span class="wallet__gypsy-5">Цыганить по 5 монет</span>
+        <input v-model="isChecked" type="checkbox" class="wallet__input" />
+        <span class="wallet__gypsy-5" @click="incrementsCoinsFive"
+          >Цыганить по 5 монет</span
+        >
         <span id="gypsy" class="wallet__checkbox-border" />
         <!--        <span class="wallet__img-checked" />-->
         <img
+          v-if="isChecked"
           src="@/assets/images/wallet/checked.png"
-          alt=""
+          alt="galka"
           class="wallet__img-checked"
         />
       </label>
@@ -62,6 +88,10 @@
   &__gypsy-1 {
     color: $color-gypsy;
     border-bottom: 1px solid #ff7f2280;
+    cursor: pointer;
+    &:hover {
+      color: #ff5722;
+    }
   }
   &__label {
     position: relative;
@@ -79,6 +109,7 @@
     position: absolute;
     top: 5px;
     left: 0;
+    z-index: -1;
   }
   &__input {
     opacity: 0;
