@@ -10,7 +10,7 @@ const { coins } = toRefs(coinsState);
 const toggleModalWindowError = ref(false);
 
 watch(
-  () => coins.value,
+  () => coins.value, // отслеживание изменения coins и вызов modalError если coins достигли 100
   (newValue) => {
     if (newValue >= 100) {
       toggleModalWindowError.value = true;
@@ -20,12 +20,25 @@ watch(
 const closeModalWindowError = () => {
   toggleModalWindowError.value = false;
 };
+const showModalError = () => {
+  toggleModalWindowError.value = true;
+};
+watch(
+  () => coins.value,
+  (newValue) => {
+    console.log(newValue);
+    console.log(toggleModalWindowError.value);
+  },
+);
 </script>
 
 <template>
   <div class="home-page">
     <Header />
-    <Wallet />
+    <Wallet
+      :state-toggle-modal-window-error="toggleModalWindowError"
+      @emitShowError="showModalError"
+    />
     <ModalWindowError
       v-show="toggleModalWindowError"
       @emitCloseModalWindowError="closeModalWindowError"

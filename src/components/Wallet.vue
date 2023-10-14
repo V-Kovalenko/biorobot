@@ -1,8 +1,9 @@
 <script setup>
-import { computed, reactive, ref, toRefs } from "vue";
+import { ref, toRefs } from "vue";
 import useCoins from "@/stores/useCoins";
 import UiLink from "@/components/ui/UiLink.vue";
 
+const emit = defineEmits(["emitShowError"]);
 const coinsState = useCoins();
 const { coins, textCoins } = toRefs(coinsState); // данные монет и текст из store useCoins
 const isChecked = ref(false); // состояние checkbox
@@ -14,25 +15,26 @@ const incrementCoins = () => {
     coins.value += 5;
   }
 };
-const imgCoins = computed(() =>
-  // добавление картинок - монеток
-  Array(coins.value).fill({
-    url: new URL("@/assets/images/wallet/coin.png", import.meta.url),
-  }),
-);
+
+const sendEmitShowError = () => {
+  emit("emitShowError");
+};
 </script>
 
 <template>
   <div class="wallet">
     <div class="wallet__container" />
     <h2 class="wallet__h2">Кошелёк криптовалют</h2>
-    <img
-      v-for="(img, idx) in imgCoins"
-      :key="idx"
-      :src="img.url"
-      alt="Coins"
-      class="wallet__money-img"
-    />
+    <div class="wallet__coins">
+      <img
+        v-for="number in coins"
+        :key="number"
+        alt="Coins"
+        class="wallet__money-img"
+        src="@/assets/images/wallet/coin.png"
+        :style="{ zIndex: coins + 1 - number }"
+      />
+    </div>
 
     <div class="wallet__count-money money">
       <span class="wallet__number-money money">{{ coins }}</span>
@@ -40,13 +42,12 @@ const imgCoins = computed(() =>
     </div>
 
     <div class="wallet__gypsy text">
-      <UiLink v-if="coins < 100" @click="incrementCoins" />
-      <UiLink v-else :link-disabled="true" />
+      <UiLink v-if="coins < 100" :link="true" @click="incrementCoins" />
+      <UiLink v-else :link-disabled="true" @click="sendEmitShowError" />
       <label for="gypsy" class="wallet__label">
         <input v-model="isChecked" type="checkbox" class="wallet__input" />
         <span class="wallet__gypsy-5">Цыганить по 5 монет</span>
         <span id="gypsy" class="wallet__checkbox-border" />
-        <!--        <span class="wallet__img-checked" />-->
         <img
           v-if="isChecked"
           src="@/assets/images/wallet/checked.png"
@@ -68,12 +69,15 @@ const imgCoins = computed(() =>
   &__h2 {
     margin-bottom: 60px;
   }
+  &__coins {
+    display: flex;
+    flex-wrap: wrap;
+  }
   &__money-img {
-    //margin-bottom: 24px;
-    display: inline;
     width: 16px;
     height: 20px;
-    //margin: 0;
+    position: relative;
+    margin-right: -8px;
   }
   &__count-money {
     margin: 24px 0 44px 0;
