@@ -38,6 +38,7 @@ const sendEmitClose = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 99;
 
   //background: #1a1a1a;
   background: rgba(26, 26, 26, 0.7);

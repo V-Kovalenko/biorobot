@@ -59,9 +59,12 @@ body {
   }
 .info-text {
   @include adaptiv-font(20, 18);
+  font-weight: 600;
+  color: $color-h2;
 }
   .text {
-    @include font-style(16px, 24px, 500)
+    @include font-style(16px, 24px, 500);
+    color: $color-text-text;
   }
   .medium-text {
     @include font-style(14px, 20px, 500)

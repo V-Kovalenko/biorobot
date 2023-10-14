@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 
 const useCoins = defineStore("useCoins", () => {
-  const coins = ref(98);
+  const coins = ref(80);
   const textCoins = computed(() => {
     if (coins.value === 1) {
       return "biorobo монета";

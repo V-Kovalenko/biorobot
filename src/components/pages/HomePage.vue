@@ -4,6 +4,7 @@ import Header from "@/components/Header.vue";
 import Wallet from "@/components/Wallet.vue";
 import ModalWindowError from "@/components/modalWindow/ModalWindowError.vue";
 import useCoins from "@/stores/useCoins";
+import Market from "@/components/Market.vue";
 
 const coinsState = useCoins();
 const { coins } = toRefs(coinsState);
@@ -23,13 +24,6 @@ const closeModalWindowError = () => {
 const showModalError = () => {
   toggleModalWindowError.value = true;
 };
-watch(
-  () => coins.value,
-  (newValue) => {
-    console.log(newValue);
-    console.log(toggleModalWindowError.value);
-  },
-);
 </script>
 
 <template>
@@ -43,6 +37,7 @@ watch(
       v-show="toggleModalWindowError"
       @emitCloseModalWindowError="closeModalWindowError"
     />
+    <Market />
   </div>
 </template>
 
