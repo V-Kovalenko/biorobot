@@ -7,18 +7,13 @@ const coinsState = useCoins();
 const { coins, textCoins } = toRefs(coinsState); // данные монет и текст из store useCoins
 const isChecked = ref(false); // состояние checkbox
 const incrementCoins = () => {
-  if (coins.value < 100) {
+  if (coins.value <= 100 && !isChecked.value) {
     // увеличить монеты на 1
     coins.value++;
-  }
-};
-const incrementsCoinsFive = () => {
-  // прибавка по 5 монет
-  if (isChecked.value && coins.value <= 95) {
+  } else if (isChecked.value && coins.value <= 95) {
     coins.value += 5;
   }
 };
-
 const imgCoins = computed(() =>
   // добавление картинок - монеток
   Array(coins.value).fill({
@@ -32,7 +27,8 @@ const imgCoins = computed(() =>
     <div class="wallet__container" />
     <h2 class="wallet__h2">Кошелёк криптовалют</h2>
     <img
-      v-for="img in imgCoins"
+      v-for="(img, idx) in imgCoins"
+      :key="idx"
       :src="img.url"
       alt="Coins"
       class="wallet__money-img"
@@ -48,9 +44,7 @@ const imgCoins = computed(() =>
       <UiLink v-else :link-disabled="true" />
       <label for="gypsy" class="wallet__label">
         <input v-model="isChecked" type="checkbox" class="wallet__input" />
-        <span class="wallet__gypsy-5" @click="incrementsCoinsFive"
-          >Цыганить по 5 монет</span
-        >
+        <span class="wallet__gypsy-5">Цыганить по 5 монет</span>
         <span id="gypsy" class="wallet__checkbox-border" />
         <!--        <span class="wallet__img-checked" />-->
         <img
