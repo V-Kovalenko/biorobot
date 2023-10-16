@@ -8,11 +8,14 @@ const coinsState = useCoins();
 const { coins, textCoins } = toRefs(coinsState); // данные монет и текст из store useCoins
 const isChecked = ref(false); // состояние checkbox
 const incrementCoins = () => {
-  if (coins.value <= 100 && !isChecked.value) {
+  const sum = coins.value + 1 <= 100 || coins.value + 5 <= 100;
+  if (coins.value <= 100 && !isChecked.value && sum) {
     // увеличить монеты на 1
     coins.value++;
   } else if (isChecked.value && coins.value <= 95) {
     coins.value += 5;
+  } else {
+    sendEmitShowError();
   }
 };
 

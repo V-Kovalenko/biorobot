@@ -5,6 +5,8 @@ import Wallet from "@/components/Wallet.vue";
 import ModalWindowError from "@/components/modalWindow/ModalWindowError.vue";
 import useCoins from "@/stores/useCoins";
 import Market from "@/components/Market.vue";
+import Stock from "@/components/Stock.vue";
+import Production from "@/components/Production.vue";
 
 const coinsState = useCoins();
 const { coins } = toRefs(coinsState);
@@ -24,20 +26,24 @@ const closeModalWindowError = () => {
 const showModalError = () => {
   toggleModalWindowError.value = true;
 };
+const showModalErrorStock = () => {
+  if (coins.value >= 100) {
+    toggleModalWindowError.value = true;
+  }
+};
 </script>
 
 <template>
   <div class="home-page">
     <Header />
-    <Wallet
-      :state-toggle-modal-window-error="toggleModalWindowError"
-      @emitShowError="showModalError"
-    />
+    <Wallet @emitShowError="showModalError" />
     <ModalWindowError
       v-show="toggleModalWindowError"
       @emitCloseModalWindowError="closeModalWindowError"
     />
     <Market />
+    <Stock @emitShowErrorStock="showModalErrorStock" />
+    <Production />
   </div>
 </template>
 

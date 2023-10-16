@@ -7,34 +7,33 @@ import useCoins from "@/stores/useCoins";
 const stock = useStock();
 const coinsState = useCoins();
 const { coins } = toRefs(coinsState);
-const { storePares } = toRefs(stock);
+const { storeSpares } = toRefs(stock);
 
 const buyDetails = (item) => {
-  // продать детали
-  if (coins.value >= item.price) {
-    coins.value -= item.price;
+  // купить детали
+  if (coins.value >= item.priceBuy) {
+    coins.value -= item.priceBuy;
     item.count++;
-    console.log(item.count);
   }
 };
 </script>
 
 <template>
   <div class="market">
+    <h2 class="market__h2">Рынок комплектующих</h2>
     <div class="market__content">
-      <h2 class="market__h2">Рынок комплектующих</h2>
       <div class="market__cards">
-        <div v-for="item in storePares" :key="item.title" class="market__card">
+        <div v-for="item in storeSpares" :key="item.title" class="market__card">
           <img :src="item.url" alt="img" class="market__card-img" />
           <p class="market__card-title info-text">{{ item.title }}</p>
           <div class="market__card-text text">
             Стоимость
-            <span>{{ item.price }}</span> монет
+            <span style="font-weight: 600">{{ item.priceBuy }}</span> монет
           </div>
 
           <div class="market__btn">
             <UiButton
-              v-if="coins >= item.price"
+              v-if="coins >= item.priceBuy"
               btn-title="Установить"
               :btn-fill="true"
               @click="buyDetails(item)"
@@ -49,17 +48,22 @@ const buyDetails = (item) => {
 
 <style scoped lang="scss">
 .market {
+  margin-bottom: 100px;
   &__content {
     display: flex;
+    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
+    flex-direction: column;
   }
   &__h2 {
   }
   &__cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    justify-items: center;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
+    column-gap: 24px;
   }
   &__card {
     display: grid;
@@ -69,8 +73,8 @@ const buyDetails = (item) => {
   }
   &__card-img {
     position: relative;
-    width: 260px;
-    height: 260px;
+    width: 200px;
+    height: 200px;
   }
   &__card-title {
     margin-bottom: 5px;
