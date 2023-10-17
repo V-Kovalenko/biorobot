@@ -7,7 +7,7 @@ const useStock = defineStore("useStock", () => {
       url: new URL("@/assets/images/market/hand.png", import.meta.url),
       title: "Биорука",
       priceBuy: 7,
-      count: 0,
+      count: 10,
       priceSell: 5,
     },
     {

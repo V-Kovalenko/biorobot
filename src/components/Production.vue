@@ -1,10 +1,39 @@
 <script setup>
-import { toRefs } from "vue";
+import { computed, ref, toRefs } from "vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import useStock from "@/stores/useStock";
 
 const storeStockState = useStock();
 const { storeSpares, productionSpares } = toRefs(storeStockState);
+/* init  data for details hand start */
+const stateCountHand = storeSpares.value[0].count;
+const requiredHands = ref(4);
+const stockHands = ref(stateCountHand); // Достать со стора или из пропса (склад)
+const handsArray = ref([]);
+
+const activeHands = computed(() =>
+  handsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
+);
+
+const handArray = ref([
+  new URL("@/assets/images/production/details/handReady.png", import.meta.url),
+  new URL(
+    "@/assets/images/production/details/handInStock.png",
+    import.meta.url,
+  ),
+  new URL(
+    "@/assets/images/production/details/handNotInStock.png",
+    import.meta.url,
+  ),
+]);
+// const test = computed(() => {
+//   if (storeSpares[0].count > 0 && storeSpares[0].count < 1 ) {
+//     console.log(handArray.value = new URL(
+//         "@/assets/images/production/details/handInStock.png",
+//         import.meta.url,)
+//   }
+// })
+/* init  data for details hand start */
 </script>
 
 <template>
@@ -48,18 +77,34 @@ const { storeSpares, productionSpares } = toRefs(storeStockState);
         <!--production__details start-->
         <div class="production__details details">
           <div>
-            <div v-for="item in productionSpares" class="details__container">
-              <div v-for="item in item.hand" class="details__hand">
+            <div
+              v-for="(detail, index) in productionSpares"
+              :key="index"
+              class="details__container"
+            >
+              <div
+                v-for="(item, index) in detail.hand"
+                :key="item.title"
+                class="details__hand"
+              >
                 <img :src="item.url" alt="12122" class="details__img" />
               </div>
-              <div v-for="item in item.microchip" class="details__hand">
+              <div
+                v-for="(item, index) in detail.microchip"
+                :key="item.title"
+                class="details__hand"
+              >
                 <img :src="item.url" alt="12122" class="details__img" />
               </div>
-              <div v-for="item in item.soul" class="details__hand">
+              <div
+                v-for="(item, index) in detail.soul"
+                :key="item.title"
+                class="details__hand"
+              >
                 <img
                   :src="item.url"
                   alt="12122"
-                  class="soul-img details__hand-img"
+                  class="soul-img details__img"
                 />
               </div>
             </div>
@@ -166,6 +211,7 @@ const { storeSpares, productionSpares } = toRefs(storeStockState);
   .details {
     align-items: center;
     justify-items: center;
+
     &__bg {
       width: 40px;
       height: 40px;
@@ -179,6 +225,7 @@ const { storeSpares, productionSpares } = toRefs(storeStockState);
       transform: translate(-50%, -50%);
       max-width: 100%;
       height: auto;
+      cursor: pointer;
     }
 
     &__hand {
@@ -189,6 +236,7 @@ const { storeSpares, productionSpares } = toRefs(storeStockState);
       display: flex;
       gap: 10px;
       margin-bottom: 2rem;
+
       .details__hand img {
         width: 10px;
         height: 10px;
@@ -208,6 +256,7 @@ const { storeSpares, productionSpares } = toRefs(storeStockState);
     grid-area: img;
   }
 }
+
 .details__container {
   display: flex;
   flex-wrap: wrap;
@@ -215,6 +264,7 @@ const { storeSpares, productionSpares } = toRefs(storeStockState);
   justify-content: start;
   align-items: center;
 }
+
 .soul-img {
   width: 100%;
 }
