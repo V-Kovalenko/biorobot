@@ -1,38 +1,139 @@
 <script setup>
-import { computed, ref, toRefs } from "vue";
+import { computed, ref, toRefs, watch } from "vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import useStock from "@/stores/useStock";
 
 const storeStockState = useStock();
 const { storeSpares, productionSpares } = toRefs(storeStockState);
-/* init  data for details hand start */
-const stateCountHand = storeSpares.value[0].count;
-const requiredHands = ref(4);
-const stockHands = ref(stateCountHand); // Достать со стора или из пропса (склад)
-const handsArray = ref([]);
 
+//hands
+const requiredHands = ref(4); // количество деталей
+const stockHands = computed(() => storeSpares.value[0].count);
+const handsArray = ref([]); // массив, в котором храним картинки деталей рук и значение true false руки
 const activeHands = computed(() =>
   handsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
 );
 
-const handArray = ref([
-  new URL("@/assets/images/production/details/handReady.png", import.meta.url),
-  new URL(
-    "@/assets/images/production/details/handInStock.png",
-    import.meta.url,
-  ),
-  new URL(
-    "@/assets/images/production/details/handNotInStock.png",
-    import.meta.url,
-  ),
-]);
-// const test = computed(() => {
-//   if (storeSpares[0].count > 0 && storeSpares[0].count < 1 ) {
-//     console.log(handArray.value = new URL(
-//         "@/assets/images/production/details/handInStock.png",
-//         import.meta.url,)
-//   }
-// })
+// microchip
+const requiredMicrochip = ref(4); // количество деталей
+const stockMicrochips = computed(() => storeSpares.value[1].count);
+const microchipsArray = ref([]); // массив, в котором храним картинки деталей рук и значение true false руки
+const activeMicrochips = computed(() =>
+  handsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
+);
+// soul
+const requiredSoul = ref(1); // количество деталей
+const stockSouls = computed(() => storeSpares.value[2].count);
+const soulsArray = ref([]); // массив, в котором храним картинки деталей рук и значение true false руки
+const activeSouls = computed(() =>
+  handsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
+);
+/* init  data for details hand end */
+
+function handleClickItem(item) {
+  // Активировать деталь
+  item.isActive = !item.isActive;
+}
+
+function initHandsArray() {
+  const result = [];
+  for (let i = 0; i < requiredHands.value; i += 1) {
+    result.push({
+      isActive: false,
+      image: new URL(
+        "@/assets/images/production/details/handInStock.png",
+        import.meta.url,
+      ),
+      activeImage: new URL(
+        "@/assets/images/production/details/handReady.png",
+        import.meta.url,
+      ),
+      disabledImage: new URL(
+        "@/assets/images/production/details/handNotInStock.png",
+        import.meta.url,
+      ),
+    });
+  }
+  handsArray.value = result;
+}
+
+function initMicrochipsArray() {
+  const result = [];
+  for (let i = 0; i < requiredMicrochip.value; i += 1) {
+    result.push({
+      isActive: false,
+      image: new URL(
+        "@/assets/images/production/details/microchipInStock.png",
+        import.meta.url,
+      ),
+      activeImage: new URL(
+        "@/assets/images/production/details/microchipReady.png",
+        import.meta.url,
+      ),
+      disabledImage: new URL(
+        "@/assets/images/production/details/microchipNotInStock.png",
+        import.meta.url,
+      ),
+    });
+  }
+  microchipsArray.value = result;
+}
+
+function initSoulsArray() {
+  const result = [];
+  for (let i = 0; i < requiredSoul.value; i += 1) {
+    result.push({
+      isActive: false,
+      image: new URL(
+        "@/assets/images/production/details/soulNotReady.png",
+        import.meta.url,
+      ),
+      activeImage: new URL(
+        "@/assets/images/production/details/soulReady.png",
+        import.meta.url,
+      ),
+      disabledImage: new URL(
+        "@/assets/images/production/details/soulNotReady.png",
+        import.meta.url,
+      ),
+    });
+  }
+  soulsArray.value = result;
+}
+
+watch(stockHands, (count) => {
+  const disabledItemsLength = requiredHands.value - count;
+  const length = handsArray.value.length;
+  for (let i = 0; i < disabledItemsLength; i += 1) {
+    const item = handsArray.value[length - i - 1];
+    item.isActive = false;
+  }
+});
+
+watch(stockMicrochips, (count) => {
+  const disabledItemsLength = requiredMicrochip.value - count;
+  const length = microchipsArray.value.length;
+  for (let i = 0; i < disabledItemsLength; i += 1) {
+    const item = microchipsArray.value[length - i - 1];
+    item.isActive = false;
+  }
+});
+
+watch(stockSouls, (count) => {
+  const disabledItemsLength = requiredSoul.value - count;
+  const length = soulsArray.value.length;
+  for (let i = 0; i < disabledItemsLength; i += 1) {
+    const item = soulsArray.value[length - i - 1];
+    item.isActive = false;
+  }
+});
+initHandsArray();
+initMicrochipsArray();
+initSoulsArray();
+
+console.log("stockSouls", handsArray.value);
+console.log("333", microchipsArray.value);
+console.log("333", soulsArray.value);
 /* init  data for details hand start */
 </script>
 
@@ -77,42 +178,93 @@ const handArray = ref([
         <!--production__details start-->
         <div class="production__details details">
           <div>
-            <div
-              v-for="(detail, index) in productionSpares"
-              :key="index"
-              class="details__container"
-            >
-              <div
-                v-for="(item, index) in detail.hand"
-                :key="item.title"
+            <div class="details__container">
+              <!--hands-->
+              <button
                 class="details__hand"
-              >
-                <img :src="item.url" alt="12122" class="details__img" />
-              </div>
-              <div
-                v-for="(item, index) in detail.microchip"
-                :key="item.title"
-                class="details__hand"
-              >
-                <img :src="item.url" alt="12122" class="details__img" />
-              </div>
-              <div
-                v-for="(item, index) in detail.soul"
-                :key="item.title"
-                class="details__hand"
+                v-for="(detail, index) in handsArray"
+                :key="index"
+                :disabled="index + 1 > stockHands"
+                @click="handleClickItem(detail)"
               >
                 <img
-                  :src="item.url"
-                  alt="12122"
-                  class="soul-img details__img"
+                  v-if="detail.isActive"
+                  :src="detail.activeImage"
+                  alt="active"
+                  class="details__img"
                 />
-              </div>
+                <img
+                  v-else-if="index + 1 > stockHands"
+                  :src="detail.disabledImage"
+                  alt="disabled"
+                  class="details__img"
+                />
+                <img
+                  v-else
+                  :src="detail.image"
+                  alt="disabled"
+                  class="details__img"
+                />
+              </button>
+              <!--microchip-->
+              <button
+                class="details__hand"
+                v-for="(detail, index) in microchipsArray"
+                :key="index"
+                :disabled="index + 1 > stockMicrochips"
+                @click="handleClickItem(detail)"
+              >
+                <img
+                  v-if="detail.isActive"
+                  :src="detail.activeImage"
+                  alt="active"
+                  class="details__img"
+                />
+                <img
+                  v-else-if="index + 1 > stockMicrochips"
+                  :src="detail.disabledImage"
+                  alt="disabled"
+                  class="details__img"
+                />
+                <img
+                  v-else
+                  :src="detail.image"
+                  alt="disabled"
+                  class="details__img"
+                />
+              </button>
+              <!--soul-->
+              <button
+                class="details__hand"
+                v-for="(detail, index) in soulsArray"
+                :key="index"
+                :disabled="index + 1 > stockSouls"
+                @click="handleClickItem(detail)"
+              >
+                <img
+                  v-if="detail.isActive"
+                  :src="detail.activeImage"
+                  alt="active"
+                  class="details__img"
+                />
+                <img
+                  v-else-if="index + 1 > stockSouls"
+                  :src="detail.disabledImage"
+                  alt="disabled"
+                  class="details__img"
+                />
+                <img
+                  v-else
+                  :src="detail.image"
+                  alt="disabled"
+                  class="details__img"
+                />
+              </button>
             </div>
             <p class="details__info">Nehvatka</p>
           </div>
-
-          <!--production__details end-->
         </div>
+        <!--production__details end-->
       </div>
       <img
         src="@/assets/images/production/robot/canDesignerFemale.png"
@@ -146,12 +298,13 @@ const handArray = ref([
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 30px;
+    //gap: 30px;
     //grid-template-columns: repeat(6, 1fr);
   }
 
   .settings {
     grid-area: settings;
+    margin-right: 30px;
 
     &__type {
       display: grid;
@@ -209,8 +362,9 @@ const handArray = ref([
   }
 
   .details {
+    display: flex;
+    justify-content: center;
     align-items: center;
-    justify-items: center;
 
     &__bg {
       width: 40px;
@@ -258,11 +412,13 @@ const handArray = ref([
 }
 
 .details__container {
-  display: flex;
-  flex-wrap: wrap;
+  //display: flex;
+  //flex-wrap: wrap;
   gap: 10px;
   justify-content: start;
   align-items: center;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .soul-img {
