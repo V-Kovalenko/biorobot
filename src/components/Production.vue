@@ -2,10 +2,14 @@
 import { computed, ref, toRefs, watch } from "vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import useStock from "@/stores/useStock";
+import useCoins from "@/stores/useCoins";
 
 const storeStockState = useStock();
+const stateCoins = useCoins();
+const { coins } = toRefs(stateCoins);
+console.log("coins", coins.value);
 const { storeSpares, productionSpares } = toRefs(storeStockState);
-
+/* init  data for details start */
 //hands
 const requiredHands = ref(4); // количество деталей
 const stockHands = computed(() => storeSpares.value[0].count);
@@ -19,16 +23,15 @@ const requiredMicrochip = ref(4); // количество деталей
 const stockMicrochips = computed(() => storeSpares.value[1].count);
 const microchipsArray = ref([]); // массив, в котором храним картинки деталей рук и значение true false руки
 const activeMicrochips = computed(() =>
-  handsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
+  microchipsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
 );
 // soul
 const requiredSoul = ref(1); // количество деталей
 const stockSouls = computed(() => storeSpares.value[2].count);
 const soulsArray = ref([]); // массив, в котором храним картинки деталей рук и значение true false руки
 const activeSouls = computed(() =>
-  handsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
+  soulsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
 );
-/* init  data for details hand end */
 
 function handleClickItem(item) {
   // Активировать деталь
@@ -131,10 +134,50 @@ initHandsArray();
 initMicrochipsArray();
 initSoulsArray();
 
-console.log("stockSouls", handsArray.value);
-console.log("333", microchipsArray.value);
-console.log("333", soulsArray.value);
-/* init  data for details hand start */
+const finished = computed(() => {
+  // условие произвести робота
+  return (
+    activeMicrochips.value === 4 &&
+    activeHands.value === 4 &&
+    activeSouls.value === 1
+  );
+});
+const creatRobot = () => {
+  // создать робота и отнять деньги (сработает если все ингридиенты в наличии)
+  if (finished && coins.value >= 10) {
+    storeSpares.value[0].count -= 4;
+    storeSpares.value[1].count -= 4;
+    storeSpares.value[2].count -= 1;
+    coins.value -= 10;
+    initHandsArray();
+    initMicrochipsArray();
+    initSoulsArray();
+  }
+};
+/* init  data for details end */
+
+/*init data for settings start*/
+
+const selectedGender = ref(""); // выбор пола робота
+const selectedType = ref(""); // выбор пола робота
+
+const reasonForNoRobotCreation = computed(() => {
+  if (finished.value && coins.value >= 10) {
+    return "Можно произвести робота";
+  } else {
+    return `Для производства робота не хватает ${
+      4 - stockHands.value
+    } биоруки, ${4 - stockMicrochips.value} микрочипа  и ${
+      1 - stockSouls.value
+    } души и ${10 - coins.value} монет`;
+  }
+});
+
+// const testInfo = computed(() => {
+//   if (finished.value)
+// });
+
+/*init data for settings end*/
 </script>
 
 <template>
@@ -148,12 +191,16 @@ console.log("333", soulsArray.value);
             <p class="settings__type-title medium-text">Тип биоробота:</p>
             <div class="settings__type-select">
               <div class="settings__type-radio">
-                <input type="radio" />
-                <span>frontEnd</span>
+                <label>
+                  <input type="radio" v-model="selectedType" value="frontEnd" />
+                  <span>FrontEnd</span>
+                </label>
               </div>
               <div class="settings__type-radio">
-                <input type="radio" />
-                <span>Design</span>
+                <label>
+                  <input type="radio" v-model="selectedType" value="design" />
+                  <span>Design</span>
+                </label>
               </div>
             </div>
           </div>
@@ -163,17 +210,28 @@ console.log("333", soulsArray.value);
             <p class="settings__stabilizer-title medium-text">Cтабилизатор:</p>
             <div class="settings__stabilizer-gender">
               <div class="settings__stabilizer-radio">
-                <input type="radio" />
-                <span>male</span>
+                <input type="radio" value="male" v-model="selectedGender" />
+                <span>Male</span>
               </div>
               <div class="settings__stabilizer-radio">
-                <input type="radio" />
-                <span>female</span>
+                <input type="radio" value="female" v-model="selectedGender" />
+                <span>Female</span>
               </div>
             </div>
           </div>
           <!--     settings__stabilizer end     -->
-          <UiButton btn-title="Произвести за 10 монет" class="settings__btn" />
+          <UiButton
+            v-if="finished && coins >= 10"
+            btn-title="Произвести за 10 монет"
+            class="settings__btn"
+            @click="creatRobot"
+          />
+          <UiButton
+            btn-title="Произвести за 10 монет"
+            class="settings__btn"
+            :btn-fill-disabled="true"
+            v-else
+          />
         </div>
         <!--production__details start-->
         <div class="production__details details">
@@ -261,15 +319,22 @@ console.log("333", soulsArray.value);
                 />
               </button>
             </div>
-            <p class="details__info">Nehvatka</p>
+            <p class="details__info">{{ reasonForNoRobotCreation }}</p>
           </div>
         </div>
         <!--production__details end-->
       </div>
+      <!--картинка робота-->
       <img
-        src="@/assets/images/production/robot/canDesignerFemale.png"
+        v-if="selectedGender === 'male'"
+        src="@/assets/images/production/robot/FrontMale.png"
         alt=""
         class="production__img"
+      />
+      <img
+        v-else
+        src="@/assets/images/production/robot/FrontFemale.png"
+        alt=""
       />
     </div>
   </div>
@@ -293,13 +358,9 @@ console.log("333", soulsArray.value);
   }
 
   &__content {
-    //display: grid;
-    //grid-template-areas: "setting details img";
     display: flex;
     justify-content: center;
     align-items: center;
-    //gap: 30px;
-    //grid-template-columns: repeat(6, 1fr);
   }
 
   .settings {
@@ -412,8 +473,6 @@ console.log("333", soulsArray.value);
 }
 
 .details__container {
-  //display: flex;
-  //flex-wrap: wrap;
   gap: 10px;
   justify-content: start;
   align-items: center;

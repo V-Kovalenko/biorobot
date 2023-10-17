@@ -11,6 +11,7 @@ import { RouterView } from "vue-router";
 <style lang="scss">
 @import "@/assets/scss/colors.scss";
 .app {
+  max-width: 1016px;
 }
 .container {
   max-width: 1016px;
