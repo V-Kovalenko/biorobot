@@ -21,7 +21,7 @@ body {
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  background: $bg-color;
+  background: $bg-color no-repeat fixed;
   padding: 48px 212px;
 
   /*styles for fonts start*/
@@ -70,7 +70,9 @@ body {
     @include font-style(14px, 20px, 500)
   }
   .second-text {
-    @include font-style(12px, 16px, 400)
+    @include font-style(12px, 16px, 400);
+    color: #A3B8CC;
+  ;
   }
   .money {
     @include adaptiv-font(24, 18);

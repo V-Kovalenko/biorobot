@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, toRefs, watch } from "vue";
+import { computed, ref, toRefs, watch, nextTick } from "vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import useStock from "@/stores/useStock";
 import useCoins from "@/stores/useCoins";
@@ -7,7 +7,7 @@ import useCoins from "@/stores/useCoins";
 const storeStockState = useStock();
 const stateCoins = useCoins();
 const { coins } = toRefs(stateCoins);
-console.log("coins", coins.value);
+
 const { storeSpares, productionSpares } = toRefs(storeStockState);
 /* init  data for details start */
 //hands
@@ -32,6 +32,27 @@ const soulsArray = ref([]); // массив, в котором храним ка
 const activeSouls = computed(() =>
   soulsArray.value.reduce((acc, rec) => (rec.isActive ? acc + 1 : acc), 0),
 );
+
+const selectedGender = ref("male"); // выбор пола робота
+const selectedType = ref("frontEnd"); // выбор пола робота
+const isCompleted = ref(false);
+
+const isAvailable = computed(() => {
+  // условие произвести робота
+  return (
+    activeMicrochips.value === requiredMicrochip.value &&
+    activeHands.value === requiredHands.value &&
+    activeSouls.value === requiredSoul.value
+  );
+});
+
+const isEnough = computed(() => {
+  return (
+    stockMicrochips.value >= requiredMicrochip.value &&
+    stockHands.value >= requiredHands.value &&
+    stockSouls.value >= requiredSoul.value
+  );
+});
 
 function handleClickItem(item) {
   // Активировать деталь
@@ -104,7 +125,41 @@ function initSoulsArray() {
   soulsArray.value = result;
 }
 
+function getNamePartByAvailability() {
+  if (isCompleted.value) {
+    return "completed";
+  }
+  if (isEnough.value) {
+    return "can";
+  }
+  return "not";
+}
+
+function getNamePartByGender() {
+  if (selectedGender.value === "male") {
+    return "Male";
+  }
+  return "Female";
+}
+
+function getNamePartByPosition() {
+  if (selectedType.value === "frontEnd") {
+    return "Front";
+  }
+  return "Design";
+}
+
+const robotImage = computed(() => {
+  const firstPart = getNamePartByAvailability();
+  const secondPart = getNamePartByPosition();
+  const thirdPart = getNamePartByGender();
+  const fileExtension = ".svg";
+  const fullName = `${firstPart}${secondPart}${thirdPart}${fileExtension}`;
+  return fullName;
+});
+
 watch(stockHands, (count) => {
+  isCompleted.value = false;
   const disabledItemsLength = requiredHands.value - count;
   const length = handsArray.value.length;
   for (let i = 0; i < disabledItemsLength; i += 1) {
@@ -114,6 +169,7 @@ watch(stockHands, (count) => {
 });
 
 watch(stockMicrochips, (count) => {
+  isCompleted.value = false;
   const disabledItemsLength = requiredMicrochip.value - count;
   const length = microchipsArray.value.length;
   for (let i = 0; i < disabledItemsLength; i += 1) {
@@ -123,6 +179,7 @@ watch(stockMicrochips, (count) => {
 });
 
 watch(stockSouls, (count) => {
+  isCompleted.value = false;
   const disabledItemsLength = requiredSoul.value - count;
   const length = soulsArray.value.length;
   for (let i = 0; i < disabledItemsLength; i += 1) {
@@ -130,21 +187,18 @@ watch(stockSouls, (count) => {
     item.isActive = false;
   }
 });
+
+watch([selectedGender, selectedType], () => {
+  isCompleted.value = false;
+});
+
 initHandsArray();
 initMicrochipsArray();
 initSoulsArray();
 
-const finished = computed(() => {
-  // условие произвести робота
-  return (
-    activeMicrochips.value === 4 &&
-    activeHands.value === 4 &&
-    activeSouls.value === 1
-  );
-});
 const creatRobot = () => {
   // создать робота и отнять деньги (сработает если все ингридиенты в наличии)
-  if (finished && coins.value >= 10) {
+  if (isAvailable && coins.value >= 10) {
     storeSpares.value[0].count -= 4;
     storeSpares.value[1].count -= 4;
     storeSpares.value[2].count -= 1;
@@ -152,30 +206,78 @@ const creatRobot = () => {
     initHandsArray();
     initMicrochipsArray();
     initSoulsArray();
+
+    nextTick(() => {
+      isCompleted.value = true;
+    });
   }
 };
 /* init  data for details end */
 
 /*init data for settings start*/
-
-const selectedGender = ref(""); // выбор пола робота
-const selectedType = ref(""); // выбор пола робота
-
-const reasonForNoRobotCreation = computed(() => {
-  if (finished.value && coins.value >= 10) {
-    return "Можно произвести робота";
-  } else {
-    return `Для производства робота не хватает ${
-      4 - stockHands.value
-    } биоруки, ${4 - stockMicrochips.value} микрочипа  и ${
-      1 - stockSouls.value
-    } души и ${10 - coins.value} монет`;
+function getWordFormByCount(count, { firstForm, secondForm }) {
+  if (String(count).endsWith("11")) {
+    return secondForm;
   }
-});
+  if (String(count).endsWith("1")) {
+    return firstForm;
+  }
 
-// const testInfo = computed(() => {
-//   if (finished.value)
-// });
+  return secondForm;
+}
+
+const errorMessage = computed(() => {
+  const requiredCoins = 10;
+  const isCoinsAvailable = coins.value >= requiredCoins;
+  if (isAvailable.value && isCoinsAvailable) {
+    return "";
+  }
+  const phrases = [];
+  if (activeHands.value < requiredHands.value) {
+    const difference = requiredHands.value - activeHands.value;
+    const word = getWordFormByCount(difference, {
+      firstForm: "биоруки",
+      secondForm: "биорук",
+    });
+    phrases.push(`${difference} ${word}`);
+  }
+  if (activeMicrochips.value < requiredMicrochip.value) {
+    const difference = requiredMicrochip.value - activeMicrochips.value;
+    const word = getWordFormByCount(difference, {
+      firstForm: "микрочипа",
+      secondForm: "микрочипов",
+    });
+    phrases.push(`${difference} ${word}`);
+  }
+  if (activeSouls.value < requiredSoul.value) {
+    const difference = requiredSoul.value - activeSouls.value;
+    const word = getWordFormByCount(difference, {
+      firstForm: "души",
+      secondForm: "душ",
+    });
+    phrases.push(`${difference} ${word}`);
+  }
+
+  if (!isCoinsAvailable) {
+    phrases.push("денег");
+  }
+  if (
+    activeHands.value === 0 &&
+    activeMicrochips.value === 0 &&
+    activeSouls.value === 0
+  ) {
+    return "Не хватает биомеханизмов, процессоров и души";
+  }
+
+  const partsPhrase = phrases.reduce((acc, rec, index, array) => {
+    if (array.length === 1) {
+      return rec;
+    }
+    const isLastItem = index === array.length - 1;
+    return !isLastItem ? `${acc}, ${rec}` : `${acc} и ${rec}`;
+  });
+  return `Для производства биоробота не хватает ${partsPhrase}`;
+});
 
 /*init data for settings end*/
 </script>
@@ -221,7 +323,7 @@ const reasonForNoRobotCreation = computed(() => {
           </div>
           <!--     settings__stabilizer end     -->
           <UiButton
-            v-if="finished && coins >= 10"
+            v-if="isAvailable && coins >= 10"
             btn-title="Произвести за 10 монет"
             class="settings__btn"
             @click="creatRobot"
@@ -319,23 +421,13 @@ const reasonForNoRobotCreation = computed(() => {
                 />
               </button>
             </div>
-            <p class="details__info">{{ reasonForNoRobotCreation }}</p>
+            <p class="details__info second-text">{{ errorMessage }}</p>
           </div>
         </div>
         <!--production__details end-->
       </div>
       <!--картинка робота-->
-      <img
-        v-if="selectedGender === 'male'"
-        src="@/assets/images/production/robot/FrontMale.png"
-        alt=""
-        class="production__img"
-      />
-      <img
-        v-else
-        src="@/assets/images/production/robot/FrontFemale.png"
-        alt=""
-      />
+      <img :src="robotImage" alt="" class="production__img" />
     </div>
   </div>
 </template>
@@ -465,6 +557,9 @@ const reasonForNoRobotCreation = computed(() => {
 
     &__soul {
     }
+    &__info {
+      min-height: 48px;
+    }
   }
 
   &__img {
@@ -474,7 +569,7 @@ const reasonForNoRobotCreation = computed(() => {
 
 .details__container {
   gap: 10px;
-  justify-content: start;
+  justify-items: center;
   align-items: center;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
