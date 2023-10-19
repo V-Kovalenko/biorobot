@@ -1,14 +1,21 @@
 <script setup>
-import { computed, ref, toRefs, watch, nextTick } from "vue";
+import { computed, ref, toRefs, watch, nextTick, onBeforeMount } from "vue";
 import UiButton from "@/components/ui/UiButton.vue";
 import useStock from "@/stores/useStock";
 import useCoins from "@/stores/useCoins";
+import ModalWindowСongratulation from "@/components/modalWindow/ModalWindowCongratulation.vue";
+import ModalWindowCongratulation from "@/components/modalWindow/ModalWindowCongratulation.vue";
 
 const storeStockState = useStock();
 const stateCoins = useCoins();
 const { coins } = toRefs(stateCoins);
 
 const { storeSpares, productionSpares } = toRefs(storeStockState);
+/*modalwindowcongratulation start*/
+const toggleModalWindowCongratulation = ref(false);
+const closeModalWindowCongratulation = () =>
+  (toggleModalWindowCongratulation.value = false);
+/*modalwindowcongratulation end*/
 /* init  data for details start */
 //hands
 const requiredHands = ref(4); // количество деталей
@@ -206,7 +213,7 @@ const creatRobot = () => {
     initHandsArray();
     initMicrochipsArray();
     initSoulsArray();
-
+    toggleModalWindowCongratulation.value = true;
     nextTick(() => {
       isCompleted.value = true;
     });
@@ -279,29 +286,60 @@ const errorMessage = computed(() => {
   return `Для производства биоробота не хватает ${partsPhrase}`;
 });
 
+watch(selectedType, (rrr) => {
+  console.log(rrr);
+});
 /*init data for settings end*/
+
+const testIn = ref("test1");
 </script>
 
 <template>
   <div class="production">
-    <h2 class="production__h2">Производство</h2>
+    <h2 class="production__h2" @click="sendEmitCreateRobo">Производство</h2>
     <div class="production__container">
       <div class="production__content">
         <div class="production__settings settings">
           <!--     settings__type start     -->
           <div class="settings__type">
             <p class="settings__type-title medium-text">Тип биоробота:</p>
-            <div class="settings__type-select">
+            <div class="settings__type-select second-text">
               <div class="settings__type-radio">
-                <label>
-                  <input type="radio" v-model="selectedType" value="frontEnd" />
-                  <span>FrontEnd</span>
+                <label for="frontEnd">
+                  <input
+                    type="radio"
+                    value="frontEnd"
+                    v-model="selectedType"
+                    id="frontEnd"
+                    class="settings__stabilizer-input"
+                  />
+                  <span class="settings__stabilizer-border-input" />
+                  <span
+                    class="settings__stabilizer-bg-input"
+                    v-if="selectedType === 'frontEnd'"
+                  />
+                  <span style="margin-left: 18px">FrontEnd</span>
                 </label>
               </div>
               <div class="settings__type-radio">
-                <label>
-                  <input type="radio" v-model="selectedType" value="design" />
-                  <span>Design</span>
+                <!--                <label>-->
+                <!--                  <input type="radio" v-model="selectedType" value="design" />-->
+                <!--                  <span>Design</span>-->
+                <!--                </label>-->
+                <label for="design">
+                  <input
+                    type="radio"
+                    value="design"
+                    v-model="selectedType"
+                    id="design"
+                    class="settings__stabilizer-input"
+                  />
+                  <span class="settings__stabilizer-border-input" />
+                  <span
+                    class="settings__stabilizer-bg-input"
+                    v-if="selectedType === 'design'"
+                  />
+                  <span style="margin-left: 18px">Design</span>
                 </label>
               </div>
             </div>
@@ -310,14 +348,40 @@ const errorMessage = computed(() => {
           <!--     settings__stabilizer start     -->
           <div class="settings__stabilizer">
             <p class="settings__stabilizer-title medium-text">Cтабилизатор:</p>
-            <div class="settings__stabilizer-gender">
+            <div class="settings__stabilizer-gender second-text">
               <div class="settings__stabilizer-radio">
-                <input type="radio" value="male" v-model="selectedGender" />
-                <span>Male</span>
+                <label for="gender-male">
+                  <input
+                    class="settings__stabilizer-input"
+                    type="radio"
+                    value="male"
+                    v-model="selectedGender"
+                    id="gender-male"
+                  />
+                  <span class="settings__stabilizer-border-input" />
+                  <span
+                    class="settings__stabilizer-bg-input"
+                    v-if="selectedGender === 'male'"
+                  />
+                  <span style="margin-left: 18px">Male</span>
+                </label>
               </div>
               <div class="settings__stabilizer-radio">
-                <input type="radio" value="female" v-model="selectedGender" />
-                <span>Female</span>
+                <label for="gender-female">
+                  <input
+                    type="radio"
+                    value="female"
+                    v-model="selectedGender"
+                    id="gender-female"
+                    class="settings__stabilizer-input"
+                  />
+                  <span class="settings__stabilizer-border-input" />
+                  <span
+                    class="settings__stabilizer-bg-input"
+                    v-if="selectedGender === 'female'"
+                  />
+                  <span style="margin-left: 18px">Female</span>
+                </label>
               </div>
             </div>
           </div>
@@ -327,6 +391,7 @@ const errorMessage = computed(() => {
             btn-title="Произвести за 10 монет"
             class="settings__btn"
             @click="creatRobot"
+            :btn-blue="true"
           />
           <UiButton
             btn-title="Произвести за 10 монет"
@@ -430,6 +495,10 @@ const errorMessage = computed(() => {
       <img :src="robotImage" alt="" class="production__img" />
     </div>
   </div>
+  <ModalWindowCongratulation
+    v-if="toggleModalWindowCongratulation"
+    @emitCloseModalWindowCongratulation="closeModalWindowCongratulation"
+  />
 </template>
 
 <style scoped lang="scss">
@@ -475,14 +544,16 @@ const errorMessage = computed(() => {
       flex-wrap: wrap;
       margin-bottom: 16px;
       gap: 27px;
+      position: relative;
+      color: $color-h2;
     }
 
     &__type-select span {
-      margin-left: 8px;
     }
 
     &__type-radio {
       display: flex;
+      position: relative;
     }
 
     &__stabilizer {
@@ -500,13 +571,40 @@ const errorMessage = computed(() => {
       flex-wrap: wrap;
       margin-bottom: 16px;
       gap: 27px;
+      color: $color-h2;
     }
 
     &__stabilizer-radio {
+      position: relative;
+    }
+
+    &__stabilizer-input {
+      opacity: 0;
+    }
+
+    &__stabilizer-border-input {
+      position: absolute;
+      top: -2px;
+      left: -5px;
+      width: 24px;
+      height: 24px;
+      border: 2px solid #a3b8cc;
+      border-radius: 100%;
+      z-index: -1;
+    }
+
+    &__stabilizer-bg-input {
+      position: absolute;
+      top: 1px;
+      left: -1.9px;
+      width: 18px;
+      height: 18px;
+      background-color: orangered;
+      border-radius: 100%;
+      z-index: -1;
     }
 
     &__stabilizer-radio span {
-      margin-left: 8px;
     }
 
     &__btn {
@@ -557,6 +655,7 @@ const errorMessage = computed(() => {
 
     &__soul {
     }
+
     &__info {
       min-height: 48px;
     }

@@ -55,7 +55,7 @@ import UiButton from "@/components/ui/UiButton.vue";
 
   &__content {
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
   }
   &__content-title {
