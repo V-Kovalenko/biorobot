@@ -47,6 +47,7 @@ const buyDetails = (item) => {
 </template>
 
 <style scoped lang="scss">
+@import "@/assets/scss/mixin";
 .market {
   margin-bottom: 100px;
   &__content {
@@ -57,6 +58,10 @@ const buyDetails = (item) => {
     flex-direction: column;
   }
   &__h2 {
+    @media screen and (max-width: 767px) {
+      max-width: 236px;
+      text-align: center;
+    }
   }
   &__cards {
     display: flex;
@@ -64,12 +69,20 @@ const buyDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
   }
   &__card {
     display: grid;
     grid-auto-rows: min-content;
     justify-items: center;
     align-items: center;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 40px;
+    }
   }
   &__card-img {
     position: relative;
@@ -80,6 +93,9 @@ const buyDetails = (item) => {
     margin-bottom: 5px;
     position: relative;
     top: -25px;
+    //@media screen and (min-width: 1024px) and (max-width: 1919px) {
+    //  @include font-style(18, 24, 500);
+    //}
   }
   &__card-text {
     margin-bottom: 24px;

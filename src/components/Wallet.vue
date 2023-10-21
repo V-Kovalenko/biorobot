@@ -65,6 +65,7 @@ function sendEmitShowError() {
 
 <style scoped lang="scss">
 @import "@/assets/scss/colors";
+@import "@/assets/scss/mixin";
 
 .wallet {
   margin-bottom: 104px;
@@ -74,15 +75,38 @@ function sendEmitShowError() {
     flex-direction: column;
     justify-content: center;
     align-items: start;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      grid-template-rows: repeat(4, auto);
+      justify-items: center;
+      align-items: center;
+    }
   }
 
   &__h2 {
     margin-bottom: 60px;
+    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+      margin-bottom: 40px;
+    }
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      max-width: 366px;
+    }
+    @media screen and (max-width: 767px) {
+      max-width: 236px;
+      text-align: center;
+    }
   }
 
   &__coins {
     display: flex;
     flex-wrap: wrap;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      max-width: 337px;
+    }
+    @media screen and (max-width: 767px) {
+      max-width: 233px;
+      margin-bottom: 0;
+    }
   }
 
   &__money-img {
@@ -96,18 +120,32 @@ function sendEmitShowError() {
     margin: 24px 0 44px 0;
     display: flex;
     gap: 10px;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 20px;
+    }
   }
 
   &__number-money {
     font-weight: 700;
+    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+      @include font-style(18, 24, 700);
+    }
   }
 
   &__text-money {
+    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+      @include font-style(18, 24, 500);
+    }
   }
 
   &__gypsy {
     display: flex;
     gap: 27px;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
   }
 
   &__gypsy-1 {

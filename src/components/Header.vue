@@ -11,12 +11,13 @@ import UiButton from "@/components/ui/UiButton.vue";
           alt="Logo"
           class="header__logo"
         />
-        <a href="/#produce"
-          ><UiButton
+        <a href="/#produce">
+          <UiButton
             btn-title="Произвести биоробота"
             :btn-orange="true"
             class="header__button"
-        /></a>
+          />
+        </a>
       </div>
 
       <div class="header__content container-content">
@@ -45,61 +46,131 @@ import UiButton from "@/components/ui/UiButton.vue";
 <style scoped lang="scss">
 @import "@/assets/scss/mixin";
 @import "@/assets/scss/colors";
+
 .header {
   margin-bottom: 124px;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 60px;
+  }
+
   &__container {
   }
+
   &__top {
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     margin: 48px 0 120px 0;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 60px;
+    }
   }
+
   &__logo {
     display: inline;
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
+
   &__button {
     color: $color-h2;
+    @media screen and (max-width: 767px) {
+      //margin: 0;
+    }
   }
 
   &__content {
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      grid-template-rows: 1fr auto;
+      justify-items: center;
+      align-items: center;
+    }
   }
+
   &__content-title {
     max-width: 470px;
+    @media screen and (max-width: 767px) {
+      order: 2;
+    }
   }
+
   &__h1 {
     color: $color-h2;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      max-width: 259px;
+    }
+    @media screen and (max-width: 767px) {
+      max-width: 236px;
+      order: 2;
+      text-align: center;
+    }
   }
+
   &__text {
-    @include font-style(24px, 32px, 600);
+    @include font-style(24, 32, 600);
     color: #a3b8cc;
+    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+      @include font-style(18, 24, 600);
+    }
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      @include font-style(14, 20, 600);
+    }
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      display: none;
+    }
+    @media screen and (max-width: 767px) {
+      display: none;
+    }
   }
+
   &__content-bg {
-    //display: flex;
-    //justify-content: space-between;
     position: relative;
     width: 275px;
     height: 275px;
     background: #1e2936;
     border-radius: 100%;
+
+    @media screen and (max-width: 1919px) {
+      width: 177px;
+      height: 177px;
+    }
+    @media screen and (max-width: 767px) {
+      order: 1;
+      margin-bottom: 30px;
+    }
   }
+
   &__content-img_blue {
     max-width: 176.49px;
     max-height: 309.31px;
     position: absolute;
     top: -7px;
     left: -23px;
+    @media screen and (max-width: 1919px) {
+      max-width: 113px;
+      max-height: 199px;
+      left: -13px;
+    }
   }
+
   &__content-img_orange {
     max-width: 138.35px;
     max-height: 195.89px;
     position: absolute;
     top: 95px;
     left: 163px;
+    @media screen and (max-width: 1919px) {
+      max-width: 89px;
+      max-height: 126px;
+      top: 59px;
+      left: 105px;
+    }
   }
 }
 </style>

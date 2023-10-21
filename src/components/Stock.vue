@@ -59,6 +59,7 @@ const sellDetails = (item) => {
 </template>
 
 <style scoped lang="scss">
+@import "@/assets/scss/mixin";
 .stock {
   &__content {
     display: grid;
@@ -67,6 +68,9 @@ const sellDetails = (item) => {
 
   &__h2 {
     margin-bottom: 60px;
+    @media screen and (max-width: 767px) {
+      text-align: center;
+    }
   }
 
   &__cards {
@@ -75,6 +79,11 @@ const sellDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
   }
 
   &__card {
@@ -82,6 +91,9 @@ const sellDetails = (item) => {
     grid-auto-rows: min-content;
     justify-items: center;
     align-items: center;
+    @media screen and (max-width: 767px) {
+      margin-bottom: 40px;
+    }
   }
 
   &__card-title {

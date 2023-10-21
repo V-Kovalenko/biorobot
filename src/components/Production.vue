@@ -507,6 +507,9 @@ const testIn = ref("test1");
 
 .production {
   margin-top: 100px;
+  //@media screen and (max-width: 767px) {
+  //  display: grid;
+  //}
 
   &__h2 {
   }
@@ -519,13 +522,8 @@ const testIn = ref("test1");
   }
 
   &__content {
-    //display: flex;
-    //justify-content: center;
-    //align-items: center;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    //justify-items: start;
-    //justify-content: start;
     justify-self: start;
   }
 

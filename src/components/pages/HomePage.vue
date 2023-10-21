@@ -60,6 +60,9 @@ const showModalErrorStock = () => {
     justify-content: center;
     align-items: self-start;
     margin: 0 auto;
+    @media screen and (max-width: 767px) {
+      padding: 24px 42px;
+    }
   }
 }
 </style>
