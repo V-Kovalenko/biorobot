@@ -29,7 +29,12 @@ const sellDetails = (item) => {
     <div class="stock__content">
       <h2 class="stock__h2">Склад</h2>
       <div class="stock__cards">
-        <div v-for="item in storeSpares" :key="item.title" class="stock__card">
+        <div
+          v-for="item in storeSpares"
+          :key="item.title"
+          class="stock__card"
+          :class="{ stock__card_lg: item.title === 'Душа' }"
+        >
           <p class="stock__card-title info-text">{{ item.title }}</p>
           <div class="stock__card-text text">
             Стоимость:
@@ -79,6 +84,13 @@ const sellDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-items: center;
+      align-items: center;
+      grid-row-gap: 50px;
+    }
     @media screen and (max-width: 767px) {
       display: grid;
       justify-items: center;
@@ -93,6 +105,15 @@ const sellDetails = (item) => {
     align-items: center;
     @media screen and (max-width: 767px) {
       margin-bottom: 40px;
+    }
+  }
+  &__card_lg {
+    grid-column: span 2;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      grid-column: span 1;
     }
   }
 

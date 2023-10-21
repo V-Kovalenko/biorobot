@@ -525,6 +525,10 @@ const testIn = ref("test1");
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     justify-self: start;
+    @media screen and (max-width: 767px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: repeat(5, auto);
+    }
   }
 
   .settings {
@@ -611,6 +615,9 @@ const testIn = ref("test1");
 
     &__btn {
       margin-top: 77px;
+      @media screen and (max-width: 767px) {
+        order: 7;
+      }
     }
   }
 
@@ -664,7 +671,10 @@ const testIn = ref("test1");
   }
 
   &__img {
-    grid-area: img;
+    @media screen and (max-width: 767px) {
+      //display: flex;
+      order: 1;
+    }
   }
 }
 

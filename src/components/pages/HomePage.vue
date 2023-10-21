@@ -54,12 +54,16 @@ const showModalErrorStock = () => {
 <style scoped lang="scss">
 .home-page {
   &__container {
-    width: 756px;
+    //width: 756px;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: self-start;
+    align-items: center;
     margin: 0 auto;
+    padding: 24px 136px 100px 136px;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      padding: 24px 136px 100px 136px;
+    }
     @media screen and (max-width: 767px) {
       padding: 24px 42px;
     }

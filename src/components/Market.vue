@@ -23,7 +23,12 @@ const buyDetails = (item) => {
     <h2 class="market__h2">Рынок комплектующих</h2>
     <div class="market__content">
       <div class="market__cards">
-        <div v-for="item in storeSpares" :key="item.title" class="market__card">
+        <div
+          v-for="item in storeSpares"
+          :key="item.title"
+          class="market__card"
+          :class="{ 'market__card-img_lg': item.title === 'Душа' }"
+        >
           <img :src="item.url" alt="img" class="market__card-img" />
           <p class="market__card-title info-text">{{ item.title }}</p>
           <div class="market__card-text text">
@@ -50,14 +55,34 @@ const buyDetails = (item) => {
 @import "@/assets/scss/mixin";
 .market {
   margin-bottom: 100px;
+  @media screen and (max-width: 767px) {
+    display: grid;
+    justify-items: center;
+    grid-template-columns: 1fr;
+    margin-bottom: 20px;
+  }
   &__content {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-auto-rows: 1fr;
+    }
+    @media screen and (max-width: 767px) {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
   &__h2 {
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      text-align: center;
+    }
     @media screen and (max-width: 767px) {
       max-width: 236px;
       text-align: center;
@@ -69,10 +94,18 @@ const buyDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      justify-items: center;
+      align-items: center;
+    }
     @media screen and (max-width: 767px) {
       display: grid;
       justify-items: center;
       align-items: center;
+      grid-template-columns: repeat(1, 1fr);
     }
   }
   &__card {
@@ -80,8 +113,20 @@ const buyDetails = (item) => {
     grid-auto-rows: min-content;
     justify-items: center;
     align-items: center;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      display: grid;
+      justify-items: center;
+      align-items: center;
+    }
     @media screen and (max-width: 767px) {
-      margin-bottom: 40px;
+      margin-bottom: 14px;
+    }
+  }
+  &__card-img_lg {
+    grid-column: span 2;
+    @media screen and (max-width: 767px) {
+      display: grid;
+      grid-column: span 1;
     }
   }
   &__card-img {

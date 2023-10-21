@@ -69,6 +69,9 @@ function sendEmitShowError() {
 
 .wallet {
   margin-bottom: 104px;
+  @media screen and (max-width: 767px) {
+    margin-bottom: 64px;
+  }
 
   &__container {
     display: flex;
@@ -89,7 +92,7 @@ function sendEmitShowError() {
       margin-bottom: 40px;
     }
     @media screen and (min-width: 768px) and (max-width: 1023px) {
-      max-width: 366px;
+      //max-width: 366px;
     }
     @media screen and (max-width: 767px) {
       max-width: 236px;
