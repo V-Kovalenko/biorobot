@@ -37,19 +37,29 @@ const showModalErrorStock = () => {
 
 <template>
   <div class="home-page">
-    <Header />
-    <Wallet @emitShowError="showModalError" />
-    <ModalWindowError
-      v-show="toggleModalWindowError"
-      @emitCloseModalWindowError="closeModalWindowError"
-    />
-    <Market />
-    <Stock @emitShowErrorStock="showModalErrorStock" />
-    <Production />
+    <div class="home-page__container">
+      <Header />
+      <Wallet @emitShowError="showModalError" />
+      <ModalWindowError
+        v-show="toggleModalWindowError"
+        @emitCloseModalWindowError="closeModalWindowError"
+      />
+      <Market />
+      <Stock @emitShowErrorStock="showModalErrorStock" />
+      <Production />
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
 .home-page {
+  &__container {
+    width: 756px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: self-start;
+    margin: 0 auto;
+  }
 }
 </style>

@@ -11,10 +11,15 @@ import UiButton from "@/components/ui/UiButton.vue";
           alt="Logo"
           class="header__logo"
         />
-        <UiButton btn-title="Произвести биоробота" :btn-orange="true" />
+        <a href="/#produce"
+          ><UiButton
+            btn-title="Произвести биоробота"
+            :btn-orange="true"
+            class="header__button"
+        /></a>
       </div>
 
-      <div class="header__content">
+      <div class="header__content container-content">
         <div class="header__content-title">
           <h1 class="header__h1">Фабрика по производству биороботов</h1>
           <p class="header__text">класса «монитор-кресло»</p>
@@ -39,6 +44,7 @@ import UiButton from "@/components/ui/UiButton.vue";
 
 <style scoped lang="scss">
 @import "@/assets/scss/mixin";
+@import "@/assets/scss/colors";
 .header {
   margin-bottom: 124px;
   &__container {
@@ -47,21 +53,26 @@ import UiButton from "@/components/ui/UiButton.vue";
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 120px;
+
+    margin: 48px 0 120px 0;
   }
   &__logo {
     display: inline;
   }
+  &__button {
+    color: $color-h2;
+  }
 
   &__content {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
   }
   &__content-title {
     max-width: 470px;
   }
   &__h1 {
+    color: $color-h2;
   }
   &__text {
     @include font-style(24px, 32px, 600);

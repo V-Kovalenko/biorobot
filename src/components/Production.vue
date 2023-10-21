@@ -296,7 +296,7 @@ const testIn = ref("test1");
 
 <template>
   <div class="production">
-    <h2 class="production__h2" @click="sendEmitCreateRobo">Производство</h2>
+    <h2 class="production__h2">Производство</h2>
     <div class="production__container">
       <div class="production__content">
         <div class="production__settings settings">
@@ -398,6 +398,7 @@ const testIn = ref("test1");
             class="settings__btn"
             :btn-fill-disabled="true"
             v-else
+            id="produce"
           />
         </div>
         <!--production__details start-->
@@ -506,7 +507,6 @@ const testIn = ref("test1");
 
 .production {
   margin-top: 100px;
-  display: flex;
 
   &__h2 {
   }
@@ -519,13 +519,17 @@ const testIn = ref("test1");
   }
 
   &__content {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    //display: flex;
+    //justify-content: center;
+    //align-items: center;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    //justify-items: start;
+    //justify-content: start;
+    justify-self: start;
   }
 
   .settings {
-    grid-area: settings;
     margin-right: 30px;
 
     &__type {

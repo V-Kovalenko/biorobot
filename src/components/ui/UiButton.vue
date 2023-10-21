@@ -38,7 +38,9 @@ const btnStyles = computed(() => {
   <button class="btn" :class="btnStyles">
     <span class="text">
       <span class="btn__bg">
-        {{ props.btnTitle }}
+        <span class="btn__text-color">
+          {{ props.btnTitle }}
+        </span>
       </span>
     </span>
   </button>
@@ -54,7 +56,6 @@ const btnStyles = computed(() => {
   width: 222px;
   height: 46px;
   border: 2px solid transparent;
-  //padding: 12px 60px 12px 60px;
   border-radius: 60px;
   text-align: center;
 
@@ -148,6 +149,12 @@ const btnStyles = computed(() => {
       background: #ff5722;
       color: #ffffff;
     }
+  }
+  &__text-color {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
   }
 
   /*btn orange end*/
