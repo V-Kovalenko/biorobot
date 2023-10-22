@@ -44,13 +44,17 @@ const sendEmitClose = () => {
 
   &__container {
     position: relative;
-    max-width: 496px;
+    //max-width: 496px;
+    min-width: 496px;
     background: $color-h2;
     display: flex;
-    padding: 1rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-radius: 10px;
+
     @media screen and (max-width: 767px) {
-      max-width: 236px;
+      min-width: 236px;
       row-gap: 20px;
       padding: 30px 0;
     }
@@ -66,31 +70,36 @@ const sendEmitClose = () => {
     display: grid;
     grid-template-rows: 1fr;
     align-items: center;
-    justify-items: center;
-    margin: 0 30px;
+    justify-items: start;
+    margin-top: 33px;
+    margin-bottom: 40px;
+    row-gap: 23px;
+
     @media screen and (max-width: 767px) {
       display: flex;
       flex-direction: column;
-      column-gap: 101px;
       justify-content: center;
       align-self: center;
-      row-gap: 10px ;
+      column-gap: 10px;
       text-align: center;
     }
   }
 
   &__title {
     color: #212529;
-    max-width: 320px;
+    max-width: 200px;
 
   }
 
   &__text {
-    max-width: 306px;
+    text-align: start;
+    max-width: 236px;
     color: #4c5865;
     font-weight: 600;
     @media screen and (max-width: 767px) {
-      @include font-style(14, 20, 600)
+      @include font-style(14, 20, 600);
+      text-align: center;
+      margin: 0 10px;
 
     }
   }
@@ -101,6 +110,10 @@ const sendEmitClose = () => {
     position: absolute;
     top: 8px;
     right: 8px;
+    @media screen and (max-width: 767px){
+      top: 12px;
+      right: 12px;
+    }
   }
 }
 </style>
