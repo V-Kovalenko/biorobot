@@ -15,10 +15,10 @@ const sendEmitClose = () => {
         </p>
       </div>
       <img
-        class="congratulation__exit"
-        src="@/assets/images/wallet/exit.png"
-        alt="exit"
-        @click="sendEmitClose"
+          class="congratulation__exit"
+          src="@/assets/images/wallet/exit.png"
+          alt="exit"
+          @click="sendEmitClose"
       />
     </div>
   </div>
@@ -26,6 +26,8 @@ const sendEmitClose = () => {
 
 <style scoped lang="scss">
 @import "@/assets/scss/colors";
+@import "@/assets/scss/mixin";
+
 .congratulation {
   width: 100vw;
   height: 100vh;
@@ -39,38 +41,66 @@ const sendEmitClose = () => {
   background: rgba(26, 26, 26, 0.7);
   top: 0;
   left: 0;
+
   &__container {
+    position: relative;
     max-width: 496px;
     background: $color-h2;
     display: flex;
     padding: 1rem;
     border-radius: 10px;
+    @media screen and (max-width: 767px) {
+      max-width: 236px;
+      row-gap: 20px;
+      padding: 30px 0;
+    }
+
   }
+
   &__coin {
     width: 43px;
     height: 52px;
   }
+
   &__content {
     display: grid;
     grid-template-rows: 1fr;
     align-items: center;
     justify-items: center;
     margin: 0 30px;
+    @media screen and (max-width: 767px) {
+      display: flex;
+      flex-direction: column;
+      column-gap: 101px;
+      justify-content: center;
+      align-self: center;
+      row-gap: 10px ;
+      text-align: center;
+    }
   }
+
   &__title {
     color: #212529;
     max-width: 320px;
+
   }
+
   &__text {
     max-width: 306px;
     color: #4c5865;
     font-weight: 600;
+    @media screen and (max-width: 767px) {
+      @include font-style(14, 20, 600)
+
+    }
   }
+
   &__exit {
     width: 16px;
     height: 16px;
-    display: inline;
-    //position: absolute;
+    position: absolute;
+    top: 8px;
+    right: 8px;
   }
 }
 </style>

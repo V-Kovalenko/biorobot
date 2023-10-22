@@ -548,7 +548,7 @@ const testIn = ref("test1");
 
   &__content {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: max-content 1fr;
     grid-column-gap: 28px;
     grid-row-gap: 20px;
     @media screen and (max-width: 1023px) {

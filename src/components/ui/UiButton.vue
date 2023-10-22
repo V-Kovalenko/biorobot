@@ -48,6 +48,7 @@ $blue-color: #7CDAF9;
   border-radius: 60px;
   border: 2px solid transparent;
   font-weight: 600;
+  height: min-content;
 
   &_orange {
     color: white;
