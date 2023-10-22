@@ -103,9 +103,6 @@ const buyDetails = (item) => {
     margin-bottom: 5px;
     position: relative;
     top: -25px;
-    //@media screen  and (max-width: 1919px) {
-    //  @include font-style(18, 24, 500);
-    //}
   }
 
   &__card-text {
@@ -115,7 +112,6 @@ const buyDetails = (item) => {
 
   &__btn {
     position: relative;
-    //top: -25px;
   }
 }
 </style>

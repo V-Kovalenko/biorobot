@@ -87,9 +87,6 @@ function sendEmitShowError() {
     @media screen and (max-width: 1023px) {
     }
     @media screen and (max-width: 767px) {
-
-      //justify-items: center;
-      //align-items: center;
     }
   }
 
@@ -153,19 +150,16 @@ function sendEmitShowError() {
     gap: 27px;
     @media screen and (max-width: 767px) {
       flex-direction: column;
-      //display: grid;
-      //justify-items: center;
-      //align-items: center;
     }
   }
 
   &__gypsy-1 {
     color: $color-gypsy;
-    border-bottom: 1px solid #ff7f2280;
+    border-bottom: 1px solid $color-gypsy-border;
     cursor: pointer;
 
     &:hover {
-      color: #ff5722;
+      color: $color-gypsy-hover;
     }
   }
 

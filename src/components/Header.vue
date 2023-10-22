@@ -62,6 +62,7 @@ import UiButton from "@/components/ui/UiButton.vue";
     margin: 0 0 120px 0;
 
     @media screen and (max-width: 767px) {
+      margin-top: 24px;
       margin-bottom: 60px;
       justify-content: center;
     }
@@ -77,14 +78,12 @@ import UiButton from "@/components/ui/UiButton.vue";
   &__button {
     color: $color-h2;
     @media screen and (max-width: 767px) {
-      //margin: 0;
     }
   }
 
   &__content {
     padding-left: 130px;
     display: flex;
-    //justify-content: space-between;
     align-items: center;
     grid-column-gap: 120px;
     @media screen and (max-width: 1919px) {

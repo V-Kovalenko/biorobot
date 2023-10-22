@@ -7,7 +7,7 @@ import useCoins from "@/stores/useCoins";
 import Market from "@/components/Market.vue";
 import Stock from "@/components/Stock.vue";
 import Production from "@/components/Production.vue";
-import ModalWindowCongratulation from "@/components/modalWindow/ModalWindowCongratulation.vue";
+
 
 const coinsState = useCoins();
 const {coins} = toRefs(coinsState);
