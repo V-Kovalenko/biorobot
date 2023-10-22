@@ -84,7 +84,7 @@ const sellDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       display: grid;
       grid-template-columns: 1fr 1fr;
       justify-items: center;

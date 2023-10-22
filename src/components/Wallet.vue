@@ -80,7 +80,7 @@ function sendEmitShowError() {
     justify-content: start;
     align-items: start;
     flex-wrap: wrap;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
     }
     @media screen and (max-width: 767px) {
       display: grid;
@@ -92,10 +92,10 @@ function sendEmitShowError() {
 
   &__h2 {
     margin-bottom: 60px;
-    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+    @media screen  and (max-width: 1919px) {
       margin-bottom: 40px;
     }
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       //max-width: 366px;
     }
     @media screen and (max-width: 767px) {
@@ -107,7 +107,7 @@ function sendEmitShowError() {
   &__coins {
     display: flex;
     flex-wrap: wrap;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       max-width: 337px;
     }
     @media screen and (max-width: 767px) {
@@ -134,13 +134,13 @@ function sendEmitShowError() {
 
   &__number-money {
     font-weight: 700;
-    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+    @media screen  and (max-width: 1919px) {
       @include font-style(18, 24, 700);
     }
   }
 
   &__text-money {
-    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+    @media screen  and (max-width: 1919px) {
       @include font-style(18, 24, 500);
     }
   }

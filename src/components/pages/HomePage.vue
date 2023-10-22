@@ -37,8 +37,8 @@ const showModalErrorStock = () => {
 
 <template>
   <div class="home-page">
+    <Header />
     <div class="home-page__container">
-      <Header />
       <Wallet @emitShowError="showModalError" />
       <ModalWindowError
         v-show="toggleModalWindowError"
@@ -61,7 +61,7 @@ const showModalErrorStock = () => {
     //align-items: center;
     margin: 0 auto;
     padding: 24px 136px 100px 136px;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       padding: 24px 136px 100px 136px;
     }
     @media screen and (max-width: 767px) {

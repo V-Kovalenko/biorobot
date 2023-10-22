@@ -67,7 +67,7 @@ const buyDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     flex-direction: column;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       display: grid;
       grid-template-columns: 1fr;
       grid-auto-rows: 1fr;
@@ -80,7 +80,7 @@ const buyDetails = (item) => {
     }
   }
   &__h2 {
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
     }
     @media screen and (max-width: 767px) {
       max-width: 236px;
@@ -93,7 +93,7 @@ const buyDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       display: grid;
       grid-template-columns: 1fr 1fr;
       grid-template-rows: 1fr 1fr;
@@ -112,7 +112,7 @@ const buyDetails = (item) => {
     grid-auto-rows: min-content;
     justify-items: center;
     align-items: center;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen  and (max-width: 1023px) {
       display: grid;
       justify-items: center;
       align-items: center;
@@ -137,7 +137,7 @@ const buyDetails = (item) => {
     margin-bottom: 5px;
     position: relative;
     top: -25px;
-    //@media screen and (min-width: 1024px) and (max-width: 1919px) {
+    //@media screen  and (max-width: 1919px) {
     //  @include font-style(18, 24, 500);
     //}
   }

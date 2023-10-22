@@ -7,15 +7,15 @@ import UiButton from "@/components/ui/UiButton.vue";
     <div class="header__container">
       <div class="header__top">
         <img
-          src="@/assets/images/header/headerLogo.png"
-          alt="Logo"
-          class="header__logo"
+            src="@/assets/images/header/headerLogo.png"
+            alt="Logo"
+            class="header__logo"
         />
         <a href="/#produce">
           <UiButton
-            btn-title="Произвести биоробота"
-            :btn-orange="true"
-            class="header__button"
+              btn-title="Произвести биоробота"
+              :btn-orange="true"
+              class="header__button"
           />
         </a>
       </div>
@@ -28,14 +28,14 @@ import UiButton from "@/components/ui/UiButton.vue";
 
         <div class="header__content-bg">
           <img
-            src="@/assets/images/header/headerRobotBlue.png"
-            alt="robotBlue"
-            class="header__content-img_blue"
+              src="@/assets/images/header/headerRobotBlue.png"
+              alt="robotBlue"
+              class="header__content-img_blue"
           />
           <img
-            src="@/assets/images/header/headerRobotOrange.png"
-            alt="robotOrange"
-            class="header__content-img_orange"
+              src="@/assets/images/header/headerRobotOrange.png"
+              alt="robotOrange"
+              class="header__content-img_orange"
           />
         </div>
       </div>
@@ -48,12 +48,26 @@ import UiButton from "@/components/ui/UiButton.vue";
 @import "@/assets/scss/colors";
 
 .header {
-  margin-bottom: 124px;
+  margin-bottom: 110px;
+
+  @media screen and (max-width: 1919px) {
+    margin-bottom: 90px;
+  }
+
+  @media screen and (max-width: 1023px) {
+    margin-bottom: 80px;
+  }
+
   @media screen and (max-width: 767px) {
     margin-bottom: 60px;
   }
 
+
   &__container {
+    @media screen and (max-width: 1023px) {
+      margin: 24px 0 80px 0;
+      padding: 0 136px;
+    }
   }
 
   &__top {
@@ -61,8 +75,10 @@ import UiButton from "@/components/ui/UiButton.vue";
     justify-content: space-between;
     align-items: center;
     margin: 48px 0 120px 0;
+
     @media screen and (max-width: 767px) {
       margin-bottom: 60px;
+      justify-content: center;
     }
   }
 
@@ -81,24 +97,31 @@ import UiButton from "@/components/ui/UiButton.vue";
   }
 
   &__content {
+    padding-left: 130px;
     display: flex;
-    justify-content: space-between;
+    //justify-content: space-between;
     align-items: center;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    grid-column-gap: 120px;
+    @media screen and (max-width: 1023px) {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      padding-left: unset;
     }
     @media screen and (max-width: 767px) {
-      display: grid;
-      grid-template-rows: 1fr auto;
+      display: flex;
+      flex-direction: column;
       justify-items: center;
       align-items: center;
+      padding: 0;
     }
   }
 
   &__content-title {
     max-width: 470px;
+    display: flex;
+    flex-direction: column;
+    grid-row-gap: 24px;
     @media screen and (max-width: 767px) {
       order: 2;
     }
@@ -106,7 +129,7 @@ import UiButton from "@/components/ui/UiButton.vue";
 
   &__h1 {
     color: $color-h2;
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen and (max-width: 1023px) {
       max-width: 259px;
     }
     @media screen and (max-width: 767px) {
@@ -119,14 +142,11 @@ import UiButton from "@/components/ui/UiButton.vue";
   &__text {
     @include font-style(24, 32, 600);
     color: #a3b8cc;
-    @media screen and (min-width: 1024px) and (max-width: 1919px) {
+    @media screen and (max-width: 1919px) {
       @include font-style(18, 24, 600);
     }
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
+    @media screen and (max-width: 1023px) {
       @include font-style(14, 20, 600);
-    }
-    @media screen and (min-width: 768px) and (max-width: 1023px) {
-      display: none;
     }
     @media screen and (max-width: 767px) {
       display: none;
