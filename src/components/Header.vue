@@ -20,7 +20,7 @@ import UiButton from "@/components/ui/UiButton.vue";
         </a>
       </div>
 
-      <div class="header__content container-content">
+      <div class="header__content">
         <div class="header__content-title">
           <h1 class="header__h1">Фабрика по производству биороботов</h1>
           <p class="header__text">класса «монитор-кресло»</p>
@@ -60,7 +60,6 @@ import UiButton from "@/components/ui/UiButton.vue";
     display: flex;
     justify-content: space-between;
     align-items: center;
-
     margin: 48px 0 120px 0;
     @media screen and (max-width: 767px) {
       margin-bottom: 60px;
@@ -85,6 +84,11 @@ import UiButton from "@/components/ui/UiButton.vue";
     display: flex;
     justify-content: center;
     align-items: center;
+    @media screen and (min-width: 768px) and (max-width: 1023px) {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
     @media screen and (max-width: 767px) {
       display: grid;
       grid-template-rows: 1fr auto;

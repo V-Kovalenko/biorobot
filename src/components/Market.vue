@@ -81,7 +81,6 @@ const buyDetails = (item) => {
   }
   &__h2 {
     @media screen and (min-width: 768px) and (max-width: 1023px) {
-      text-align: center;
     }
     @media screen and (max-width: 767px) {
       max-width: 236px;

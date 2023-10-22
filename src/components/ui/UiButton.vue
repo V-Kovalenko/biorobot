@@ -85,7 +85,7 @@ const btnStyles = computed(() => {
     border-radius: 60px;
     position: absolute;
     width: 218px;
-    height: 44px;
+    height: 42px;
     text-align: center;
 
     &:hover {

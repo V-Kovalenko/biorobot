@@ -57,8 +57,8 @@ const showModalErrorStock = () => {
     //width: 756px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
+    //justify-content: center;
+    //align-items: center;
     margin: 0 auto;
     padding: 24px 136px 100px 136px;
     @media screen and (min-width: 768px) and (max-width: 1023px) {
