@@ -38,10 +38,10 @@ const buyDetails = (item) => {
           <UiButton
               v-if="coins >= item.priceBuy"
               btn-title="Установить"
-              :btn-fill="true"
+              variant="fill"
               @click="buyDetails(item)"
           />
-          <UiButton v-else btn-title="Установить" :btn-fill-disabled="true"/>
+          <UiButton v-else btn-title="Установить" :disabled="true"/>
         </div>
       </div>
     </div>

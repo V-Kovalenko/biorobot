@@ -46,13 +46,14 @@ const sellDetails = (item) => {
             <UiButton
               v-if="item.count"
               btn-title="Продать"
-              :btn-blue="true"
+              variant="blue"
               @click="sellDetails(item)"
             />
             <UiButton
+                variant="blue"
               v-else
               btn-title="Продать"
-              :btn-blue-disabled="true"
+              :disabled="true"
               @click="sendEmitShowError"
             />
           </div>

@@ -490,14 +490,15 @@ const testIn = ref("test1");
             btn-title="Произвести за 10 монет"
             class="production__produce"
             @click="creatRobot"
-            :btn-blue="true"
+            variant="orange"
         />
         <UiButton
             v-else
             btn-title="Произвести за 10 монет"
             class="production__produce"
-            :btn-fill-disabled="true"
+            :disabled="true"
             id="produce"
+            variant="orange"
         />
         <p class="production__info second-text">{{ errorMessage }}</p>
       </div>
