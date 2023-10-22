@@ -1,5 +1,5 @@
 <script setup>
-import { computed, ref, toRefs, watch, watchEffect } from "vue";
+import {ref, toRefs} from "vue";
 import Header from "@/components/Header.vue";
 import Wallet from "@/components/Wallet.vue";
 import ModalWindowError from "@/components/modalWindow/ModalWindowError.vue";
@@ -10,17 +10,9 @@ import Production from "@/components/Production.vue";
 import ModalWindowCongratulation from "@/components/modalWindow/ModalWindowCongratulation.vue";
 
 const coinsState = useCoins();
-const { coins } = toRefs(coinsState);
+const {coins} = toRefs(coinsState);
 const toggleModalWindowError = ref(false);
 
-watch(
-  () => coins.value, // отслеживание изменения coins и вызов modalError если coins достигли 100
-  (newValue) => {
-    if (newValue >= 100) {
-      toggleModalWindowError.value = true;
-    }
-  },
-);
 const closeModalWindowError = () => {
   toggleModalWindowError.value = false;
 };
@@ -37,16 +29,18 @@ const showModalErrorStock = () => {
 
 <template>
   <div class="home-page">
-    <Header />
+    <div class="home-page__header">
+      <Header/>
+    </div>
     <div class="home-page__container">
-      <Wallet @emitShowError="showModalError" />
+      <Wallet @emitShowError="showModalError"/>
       <ModalWindowError
-        v-show="toggleModalWindowError"
-        @emitCloseModalWindowError="closeModalWindowError"
+          v-show="toggleModalWindowError"
+          @emitCloseModalWindowError="closeModalWindowError"
       />
-      <Market />
-      <Stock @emitShowErrorStock="showModalErrorStock" />
-      <Production />
+      <Market/>
+      <Stock @emitShowErrorStock="showModalErrorStock"/>
+      <Production/>
     </div>
   </div>
 </template>
@@ -54,18 +48,40 @@ const showModalErrorStock = () => {
 <style scoped lang="scss">
 .home-page {
   &__container {
-    //width: 756px;
     display: flex;
     flex-direction: column;
-    //justify-content: center;
-    //align-items: center;
     margin: 0 auto;
-    padding: 24px 136px 100px 136px;
-    @media screen  and (max-width: 1023px) {
-      padding: 24px 136px 100px 136px;
+    padding: 0 136px 100px 136px;
+    grid-row-gap: 100px;
+
+    @media screen and (max-width: 1919px) {
+      grid-row-gap: 90px;
+    }
+
+    @media screen and (max-width: 1023px) {
+      padding: 0 136px 100px 136px;
+      grid-row-gap: 80px;
     }
     @media screen and (max-width: 767px) {
-      padding: 24px 42px;
+      padding: 0 42px 24px 42px;
+      grid-row-gap: 60px;
+    }
+  }
+  &__header {
+    margin-bottom: 100px;
+
+    @media screen and (max-width: 1919px) {
+      padding: 48px 136px 0 136px;
+      margin-bottom: 90px;
+    }
+    @media screen and (max-width: 1023px) {
+      padding: 24px 136px 0 136px;
+      margin-bottom: 80px;
+    }
+    @media screen and (max-width: 767px) {
+      padding: 0 42px;
+      margin-bottom: 60px;
+
     }
   }
 }

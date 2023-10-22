@@ -40,7 +40,7 @@ const sellDetails = (item) => {
             Стоимость:
             <span style="font-weight: 600">{{ item.priceSell }}</span> монет
           </div>
-          <div class="stock__count info-text">{{ item.count }}</div>
+          <div class="stock__count info-text">{{ item.count }} шт</div>
 
           <div class="stock__btn">
             <UiButton
@@ -73,6 +73,9 @@ const sellDetails = (item) => {
 
   &__h2 {
     margin-bottom: 60px;
+    @media screen and (max-width: 1919px) {
+      margin-bottom: 40px;
+    }
     @media screen and (max-width: 767px) {
       text-align: center;
     }
@@ -84,18 +87,7 @@ const sellDetails = (item) => {
     align-items: center;
     flex-wrap: wrap;
     column-gap: 24px;
-    @media screen  and (max-width: 1023px) {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      justify-items: center;
-      align-items: center;
-      grid-row-gap: 50px;
-    }
-    @media screen and (max-width: 767px) {
-      display: grid;
-      justify-items: center;
-      align-items: center;
-    }
+    grid-row-gap: 50px;
   }
 
   &__card {
@@ -103,9 +95,6 @@ const sellDetails = (item) => {
     grid-auto-rows: min-content;
     justify-items: center;
     align-items: center;
-    @media screen and (max-width: 767px) {
-      margin-bottom: 40px;
-    }
   }
   &__card_lg {
     grid-column: span 2;

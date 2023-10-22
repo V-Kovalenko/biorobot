@@ -6,7 +6,7 @@ const sendEmitClose = () => {
 </script>
 
 <template>
-  <div class="congratulation">
+  <div class="congratulation" @click.self="sendEmitClose">
     <div class="congratulation__container">
       <div class="congratulation__content">
         <h2 class="congratulation__title">Биоробот произведён</h2>
@@ -33,7 +33,7 @@ const sendEmitClose = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99;
+  z-index: 150;
 
   //background: #1a1a1a;
   background: rgba(26, 26, 26, 0.7);

@@ -14,7 +14,7 @@ import UiButton from "@/components/ui/UiButton.vue";
         <a href="/#produce">
           <UiButton
               btn-title="Произвести биоробота"
-              :btn-orange="true"
+              variant="orange"
               class="header__button"
           />
         </a>
@@ -48,25 +48,10 @@ import UiButton from "@/components/ui/UiButton.vue";
 @import "@/assets/scss/colors";
 
 .header {
-  margin-bottom: 110px;
-
-  @media screen and (max-width: 1919px) {
-    margin-bottom: 90px;
-  }
-
-  @media screen and (max-width: 1023px) {
-    margin-bottom: 80px;
-  }
-
-  @media screen and (max-width: 767px) {
-    margin-bottom: 60px;
-  }
-
 
   &__container {
     @media screen and (max-width: 1023px) {
-      margin: 24px 0 80px 0;
-      padding: 0 136px;
+      margin: 0 0 80px 0;
     }
   }
 
@@ -74,7 +59,7 @@ import UiButton from "@/components/ui/UiButton.vue";
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 48px 0 120px 0;
+    margin: 0 0 120px 0;
 
     @media screen and (max-width: 767px) {
       margin-bottom: 60px;
@@ -102,18 +87,19 @@ import UiButton from "@/components/ui/UiButton.vue";
     //justify-content: space-between;
     align-items: center;
     grid-column-gap: 120px;
+    @media screen and (max-width: 1919px) {
+      padding-left: unset;
+    }
     @media screen and (max-width: 1023px) {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding-left: unset;
     }
     @media screen and (max-width: 767px) {
       display: flex;
       flex-direction: column;
       justify-items: center;
       align-items: center;
-      padding: 0;
     }
   }
 

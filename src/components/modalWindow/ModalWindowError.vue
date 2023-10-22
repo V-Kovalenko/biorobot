@@ -6,11 +6,11 @@ const sendEmitClose = () => {
 </script>
 
 <template>
-  <div class="error">
+  <div class="error"  @click.self="sendEmitClose">
     <div class="error__container">
       <img
         class="error__coin"
-        src="@/assets/images/wallet/coin.png"
+        src="@/assets/images/wallet/coin.svg"
         alt="Exit"
       />
       <div class="error__content">
@@ -38,7 +38,7 @@ const sendEmitClose = () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 99;
+  z-index: 150;
 
   //background: #1a1a1a;
   background: rgba(26, 26, 26, 0.7);

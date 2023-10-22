@@ -2,21 +2,17 @@
 import { computed } from "vue";
 
 const props = defineProps({
-  link: {
-    type: Boolean,
-  },
-  linkDisabled: {
+  disabled: {
     type: Boolean,
   },
 });
 const linkStyles = computed(() => ({
-  link: props.link,
-  link__disabled: props.linkDisabled,
+  link__disabled: props.disabled,
 }));
 </script>
 
 <template>
-  <span :class="linkStyles">Нацыганить</span>
+  <span class="link" :class="linkStyles"><slot /></span>
 </template>
 
 <style scoped lang="scss">
@@ -25,11 +21,16 @@ const linkStyles = computed(() => ({
   color: $color-gypsy;
   border-bottom: 1px solid #ff7f2280;
   cursor: pointer;
+  width: max-content;
   &:hover {
     color: #ff5722;
   }
-}
-.link__disabled {
-  color: #4c5865;
+  &__disabled {
+    color: #4c5865;
+    border-bottom: 1px solid transparent;
+    &:hover {
+      color: #4c5865;
+    }
+  }
 }
 </style>
